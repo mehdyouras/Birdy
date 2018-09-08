@@ -19,8 +19,18 @@ export default class BirdList extends Component {
     res.then(data => data.json()).then(data => {
       this.setState({ 
         birds: data,
+        filteredBirds: data,
       })
     });    
+  }
+
+  filterBirds(search) {
+    let birds = this.state.birds;
+    this.setState({ 
+      filteredBirds: birds.filter((bird) => {
+        return bird.comName.indexOf(search) > -1;
+      })
+    })
   }
 
   render() {
@@ -29,11 +39,12 @@ export default class BirdList extends Component {
         <View>
           <SearchBar 
             placeholder="Chercher un oiseau"
+            onChangeText={(search) => this.filterBirds(search)}
           />
         </View>
         <Card>
           <FlatList
-            data={this.state.birds}
+            data={this.state.filteredBirds}
             keyExtractor={(item, index) => item.comName + index}
             renderItem={({item}) => (
               <ListItem
