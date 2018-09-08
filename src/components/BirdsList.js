@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View , Text, FlatList } from 'react-native';
+import { View , Text, FlatList, ActivityIndicator } from 'react-native';
 import { ListItem, Card, SearchBar } from 'react-native-elements';
 
 export default class BirdList extends Component {
@@ -10,7 +10,9 @@ export default class BirdList extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      isLoading: true,
       birds: [],
+      filteredBirds: [],
     };
   }
 
@@ -20,6 +22,7 @@ export default class BirdList extends Component {
       this.setState({ 
         birds: data,
         filteredBirds: data,
+        isLoading: false,
       })
     });    
   }
@@ -34,6 +37,13 @@ export default class BirdList extends Component {
   }
 
   render() {
+    if (this.state.isLoading) {
+      return (
+        <View style={{flex: 1, paddingTop: 20}}>
+          <ActivityIndicator />
+        </View>
+      );
+    }
     return (
       <View>
         <View>
