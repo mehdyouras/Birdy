@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { ScrollView, Text, Linking, StyleSheet } from 'react-native';
-import { List, ListItem, Button, Card } from 'react-native-elements';
+import { ScrollView, Image, StyleSheet } from 'react-native';
+import { List, ListItem, Button, Card, Text } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 import { Audio, MapView } from 'expo';
@@ -54,6 +54,12 @@ export default class Bird extends Component {
             />
           </MapView>
         </Card> */}
+        <Card>
+          <Image 
+            style={{ height: 200}}
+            source={{uri: 'https://photos.lci.fr/images/613/344/export_retcpolaltar2-2c9fc1-0@1x.jpeg'}}
+          />
+        </Card>
         <Card>
           <List>
             <Text>
