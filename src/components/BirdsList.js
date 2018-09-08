@@ -1,7 +1,12 @@
 import React, { Component } from 'react';
 import { View , Text, FlatList } from 'react-native';
+import { ListItem, Card, SearchBar } from 'react-native-elements';
 
 export default class BirdList extends Component {
+  static navigationOptions = {
+    title: 'Encyclopédie',
+  };
+
   constructor(props) {
     super(props);
     this.state = {
@@ -10,13 +15,10 @@ export default class BirdList extends Component {
   }
 
   componentDidMount(){
-    const res = fetch('https://www.xeno-canto.org/api/2/recordings?query=cnt:belgium');
+    const res = fetch('https://ebird.org/ws2.0/ref/taxonomy/ebird?fmt=json&locale=fr&cat=species');
     res.then(data => data.json()).then(data => {
       this.setState({ 
-        birds: data.recordings.map((bird, index) => {
-          bird.key = 'bird' + index + bird.en;
-          return bird;
-        }) 
+        birds: data,
       })
     });    
   }
@@ -24,14 +26,23 @@ export default class BirdList extends Component {
   render() {
     return (
       <View>
-        <FlatList
-          data={this.state.birds}
-          renderItem={({item}) => (
-            <Text onPress={() => this.props.navigation.navigate('Bird', { bird: item })}>
-              { item.en }
-            </Text>
-          )}
-        />
+        <View>
+          <SearchBar 
+            placeholder="Chercher un oiseau"
+          />
+        </View>
+        <Card>
+          <FlatList
+            data={this.state.birds}
+            keyExtractor={(item, index) => item.comName + index}
+            renderItem={({item}) => (
+              <ListItem
+                title={item.comName}
+                onPress={() => this.props.navigation.navigate('Bird', { bird: item })}
+              />
+            )}
+          />
+        </Card>
       </View>
     );
   }

@@ -1,5 +1,17 @@
 {
   "expo": {
-    "sdkVersion": "27.0.0"
+   "name": "birdy",
+   "version": "1.0.0",
+   "slug": "birdy",
+   "sdkVersion": "27.0.0",
+   "ios": {
+     "bundleIdentifier": "be.hepl.birdy"
+   },
+   "android": {
+     "package": "be.hepl.birdy",
+     "config": {
+        "googleMaps": { "apiKey": "AIzaSyAn-8lOiXi4Mh81VynRo9caN6xHQ1AO2cA" }   
+      }
+   }
   }
 }
