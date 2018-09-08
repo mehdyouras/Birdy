@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { View , Text, FlatList, ActivityIndicator } from 'react-native';
-import { ListItem, Card, SearchBar } from 'react-native-elements';
+import { ScrollView, View, FlatList, ActivityIndicator } from 'react-native';
+import { ListItem, Card, Text, SearchBar } from 'react-native-elements';
 
 export default class BirdList extends Component {
   static navigationOptions = {
@@ -36,34 +36,51 @@ export default class BirdList extends Component {
     })
   }
 
-  render() {
+  renderBirdsList() {
     if (this.state.isLoading) {
       return (
-        <View style={{flex: 1, paddingTop: 20}}>
-          <ActivityIndicator />
+        <View style={{flex: 1}}>
+          <ActivityIndicator size={36} />
         </View>
       );
+    } else if(!this.state.filteredBirds[0]) {
+      return (
+        <View>
+          <Text>
+            Aucun oiseau ne correspond à votre recherche
+          </Text>
+        </View>
+      )
     }
+    return (
+      <FlatList
+        data={this.state.filteredBirds}
+        keyExtractor={(item, index) => item.comName + index}
+        renderItem={({item}) => (
+          <ListItem
+            title={item.comName}
+            onPress={() => this.props.navigation.navigate('Bird', { bird: item })}
+          />
+        )}
+      />
+    )
+  }
+
+  render() {
     return (
       <View>
         <View>
           <SearchBar 
+            round
             placeholder="Chercher un oiseau"
             onChangeText={(search) => this.filterBirds(search)}
           />
         </View>
-        <Card>
-          <FlatList
-            data={this.state.filteredBirds}
-            keyExtractor={(item, index) => item.comName + index}
-            renderItem={({item}) => (
-              <ListItem
-                title={item.comName}
-                onPress={() => this.props.navigation.navigate('Bird', { bird: item })}
-              />
-            )}
-          />
-        </Card>
+        <ScrollView>
+          <Card>
+            { this.renderBirdsList() }
+          </Card>
+        </ScrollView>
       </View>
     );
   }
