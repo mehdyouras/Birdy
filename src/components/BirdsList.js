@@ -1,22 +1,38 @@
 import React, { Component } from 'react';
-import { ScrollView, View, FlatList, ActivityIndicator } from 'react-native';
-import { ListItem, Card, Text, SearchBar } from 'react-native-elements';
+import { ScrollView, View, FlatList, ActivityIndicator, Modal, TouchableHighlight } from 'react-native';
+import { ListItem, Card, Text, SearchBar, Button } from 'react-native-elements';
 
+import LoginForm from '../components/LoginForm';
 export default class BirdList extends Component {
-  static navigationOptions = {
-    title: 'Encyclopédie',
+  static navigationOptions = ({ navigation }) => {
+    return {
+      title: 'Encyclopédie',
+      headerRight: (
+        <Button
+          icon={{ name: 'person', color: "black", size: 24 }}
+          backgroundColor="white"
+          onPress={ navigation.getParam('showLoginModal') }
+        />
+      ),
+    }
   };
 
   constructor(props) {
     super(props);
     this.state = {
       isLoading: true,
+      showLogin: false,
       birds: [],
       filteredBirds: [],
     };
   }
 
+  _showLoginModal = () => {
+    this.setState({ showLogin: true });
+  }
+
   componentDidMount(){
+    this.props.navigation.setParams({ showLoginModal: this._showLoginModal });
     const res = fetch('https://ebird.org/ws2.0/ref/taxonomy/ebird?fmt=json&locale=fr&cat=species');
     res.then(data => data.json()).then(data => {
       this.setState({ 
@@ -81,6 +97,24 @@ export default class BirdList extends Component {
             { this.renderBirdsList() }
           </Card>
         </ScrollView>
+        <Modal
+          animationType="slide"
+          transparent={false}
+          visible={this.state.showLogin}
+          onRequestClose={() => {
+            this.setState({ showLogin: false })
+          }}>
+          <View style={{marginTop: 22}}>
+            <Button
+              icon={{ name: 'close' }}
+              backgroundColor="red"
+              onPress={() => {
+                this.setState({ showLogin: false });
+              }}
+            />
+            <LoginForm />
+          </View>
+        </Modal>
       </View>
     );
   }

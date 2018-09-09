@@ -3,11 +3,25 @@ import { StyleSheet } from 'react-native';
 import { createBottomTabNavigator } from 'react-navigation';
 
 import EncyclopediaScreen from './src/screens/EncyclopediaScreen';
-import UsersScreen from './src/screens/UsersScreen';
+import CatchScreen from './src/screens/CatchScreen';
 
 import Icon from 'react-native-vector-icons/Ionicons';
 
+import * as firebase from 'firebase';
+
+
 export default class App extends React.Component {
+  componentWillMount() {
+    // Initialize Firebase
+    const firebaseConfig = {
+      apiKey: "AIzaSyAkUfnFMSFSWhKEMW5Pfdt2YfHlWXeQ0gE",
+      authDomain: "birdy-75b29.firebaseapp.com",
+      databaseURL: "https://birdy-75b29.firebaseio.com",
+    };
+
+    firebase.initializeApp(firebaseConfig);
+  }
+
   render() {
     return (
       <AppBottomTabNavigator />
@@ -25,12 +39,12 @@ const AppBottomTabNavigator = createBottomTabNavigator({
       )
     }
   },
-  Users: {
-    screen: UsersScreen,
+  Catch: {
+    screen: CatchScreen,
     navigationOptions: {
-      tabBarLabel: 'Les utilisateurs',
+      tabBarLabel: 'Les prises',
       tabBarIcon: ({ tintcolor }) => (
-        <Icon name="ios-contacts" size={24} />
+        <Icon name="ios-map" size={24} />
       )
     }
   },
@@ -44,3 +58,5 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
 });
+
+

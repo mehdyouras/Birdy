@@ -6,7 +6,7 @@ import {
   StyleSheet
 } from 'react-native';
 
-class UsersScreen extends Component {
+class CatchScreen extends Component {
   render() {
     return (
       <View>
@@ -16,4 +16,4 @@ class UsersScreen extends Component {
   }
 }
 
-export default UsersScreen;
+export default CatchScreen;
