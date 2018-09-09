@@ -1,11 +1,15 @@
 import React, { Component } from 'react';
-import { View, Text, Dimensions } from 'react-native';
+import { View, ScrollView, Text, Dimensions, Modal } from 'react-native';
+import { Button, Card } from 'react-native-elements';
 import { MapView } from 'expo';
+
+import AddBirdForm from './AddBirdForm';
 
 export default class CatchMap extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      showAddBird: false,
       markers: [],
     };
   }
@@ -46,6 +50,32 @@ export default class CatchMap extends Component {
             })
           }
         </MapView>
+        <View style={{position: "absolute", bottom: 70, left: 0, width: Dimensions.get('window').width}} >
+          <Button 
+            title="AJOUTER UNE PRISE" 
+            icon={{ name: 'add' }} 
+            backgroundColor="#3478f6"
+            onPress={ () => this.setState({ showAddBird: true }) }
+          />
+        </View>
+        <Modal
+          animationType="slide"
+          transparent={false}
+          visible={this.state.showAddBird}
+          onRequestClose={() => {
+            this.setState({ showAddBird: false })
+          }}>
+          <ScrollView style={{marginTop: 22}}>
+            <Button
+              icon={{ name: 'close' }}
+              backgroundColor="red"
+              onPress={() => {
+                this.setState({ showAddBird: false });
+              }}
+            />
+            <AddBirdForm />
+          </ScrollView>
+        </Modal>
       </View>
     );
   }

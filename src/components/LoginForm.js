@@ -63,6 +63,7 @@ export default class LoginForm extends Component {
           <Button
             title="Se connecter"
             onPress={() => this.logIn()}
+            backgroundColor="#3478f6"
           />
         </Card>
         <Card

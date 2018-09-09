@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { ScrollView, Image, StyleSheet } from 'react-native';
+import { ScrollView, Image, StyleSheet, View } from 'react-native';
 import { List, ListItem, Button, Card, Text } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/Ionicons';
 
@@ -37,23 +37,6 @@ export default class Bird extends Component {
     
     return (
       <ScrollView>
-        {/* <Card>
-          <MapView 
-            liteMode
-            style={styles.map}
-            initialRegion={{
-              latitude: parseInt(bird.lat),
-              longitude: parseInt(bird.lng),
-              latitudeDelta: 0.0922,
-              longitudeDelta: 0.0421,
-            }}
-          >
-            <MapView.Marker
-              coordinate={{latitude: parseInt(bird.lat), longitude: parseInt(bird.lng)}}
-              title={bird.en}
-            />
-          </MapView>
-        </Card> */}
         <Card>
           <Image 
             style={{ height: 200}}
@@ -93,14 +76,18 @@ export default class Bird extends Component {
             <Text>
               Chant:
             </Text>
-            <Button
-              icon={{name: 'play', type: 'font-awesome'}}
-              onPress={() => this.birdSound.playAsync()}
-            />
-            <Button
-              icon={{name: 'pause', type: 'font-awesome'}}
-              onPress={() => this.birdSound.pauseAsync()}
-            />
+            <View>
+              <Button
+                icon={{name: 'play', type: 'font-awesome'}}
+                onPress={() => this.birdSound.playAsync()}
+                backgroundColor="#3478f6"
+              />
+              <Button
+                icon={{name: 'pause', type: 'font-awesome'}}
+                onPress={() => this.birdSound.pauseAsync()}
+                backgroundColor="red"
+              />
+            </View>
           </List>
         </Card>
         {/* <Button 
