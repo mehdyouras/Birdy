@@ -6,11 +6,13 @@ import {
   StyleSheet
 } from 'react-native';
 
+import CatchMap from '../components/CatchMap';
+
 class CatchScreen extends Component {
   render() {
     return (
       <View>
-        <Text>Users</Text>
+        <CatchMap />
       </View>
     );
   }
